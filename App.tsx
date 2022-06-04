@@ -1,21 +1,16 @@
 import React from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
+import RootStack from './src/nav/rootStack';
+import useInitFonts from './src/style/theme/hooks/useInitFonts';
 
 export default function App() {
+  const {fontsLoaded} = useInitFonts();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <>
+      {fontsLoaded ? <RootStack /> : <View />}
       <StatusBar style={'auto'} />
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
