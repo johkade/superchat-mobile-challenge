@@ -1,9 +1,8 @@
-import COLORS from '../colors';
-
 type UnwrappedTheme = {
   background: string;
   card: string;
   cardActive: string;
+  cardActiveAlt: string;
   cardInactive: string;
   iconBackground: string;
   cardDark: string;
@@ -16,5 +15,6 @@ type UnwrappedTheme = {
   border: string;
   notification: string;
   avatarBackgrounds: string[];
+  onCardActive: string;
 };
 export default UnwrappedTheme;

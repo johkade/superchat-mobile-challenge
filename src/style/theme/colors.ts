@@ -6,10 +6,12 @@ const COLORS = {
   gray300: '#94A3B8',
   gray700: '#475569',
   gray800: '#334155',
-  cobalt: '#040FD9',
+  cobalt: '#3036a6',
   cobaltLight: '#868ad3',
+  purpurLight: '#c086d3',
   paleBlue: '#94A3B8',
   offBlack: '#1E293B',
+  orange: '#e14412',
 };
 
 export default COLORS;

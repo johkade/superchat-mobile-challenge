@@ -15,14 +15,18 @@ import useTheme from '../../style/theme/hooks/useTheme';
 import ConversationWithName from '../../model/types/conversationWithName';
 import UnwrappedTheme from '../../style/theme/types/UnwrappedTheme';
 
-type Props = {conversationWithName: ConversationWithName; style: ViewStyle};
+type Props = {
+  conversationWithName: ConversationWithName;
+  style: ViewStyle;
+  onPress: (convWithName: ConversationWithName) => void;
+};
 
 const iconsForType: {MAIL: AvailableIcon; SMS: AvailableIcon} = {
   MAIL: 'mail-outline',
   SMS: 'chatbubble-outline',
 };
 
-const ConversationDisplay = ({conversationWithName, style}: Props) => {
+const ConversationDisplay = ({conversationWithName, style, onPress}: Props) => {
   const theme = useTheme();
   const {first_name, last_name, conversationType, id} = conversationWithName;
 
@@ -32,7 +36,8 @@ const ConversationDisplay = ({conversationWithName, style}: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={ACTIVE_OPACITY}
-      style={[styles.container, {backgroundColor: theme.card}, style]}>
+      style={[styles.container, {backgroundColor: theme.card}, style]}
+      onPress={() => onPress(conversationWithName)}>
       <Avatar letter={first_name?.[0] ?? '?'} bg={avatarBg} />
       <CText
         text={`${first_name} ${last_name}`}

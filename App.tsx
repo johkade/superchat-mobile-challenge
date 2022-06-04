@@ -5,7 +5,7 @@ import RootStack from './src/nav/rootStack';
 import useInitFonts from './src/style/theme/hooks/useInitFonts';
 import {QueryClient, QueryClientProvider} from 'react-query';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export default function App() {
   const {fontsLoaded} = useInitFonts();

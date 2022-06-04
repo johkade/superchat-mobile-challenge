@@ -6,6 +6,8 @@ export const DARK_THEME: UnwrappedTheme = {
   background: COLORS.offBlack,
   card: COLORS.gray800,
   cardActive: COLORS.cobaltLight,
+  cardActiveAlt: COLORS.purpurLight,
+  onCardActive: COLORS.white,
   cardDark: COLORS.gray50,
   cardInactive: `${COLORS.cobaltLight}77`,
   iconBackground: COLORS.gray800,
@@ -15,7 +17,7 @@ export const DARK_THEME: UnwrappedTheme = {
   fontMedium: COLORS.gray300,
   fontLight: COLORS.gray300,
   fontInverse: COLORS.offBlack,
-  primary: COLORS.cobalt,
+  primary: COLORS.orange,
   border: COLORS.gray800,
   avatarBackgrounds: ['#990', '#009', '#090', '#909'],
 };
@@ -24,6 +26,8 @@ export const LIGHT_THEME: UnwrappedTheme = {
   background: COLORS.white,
   card: COLORS.gray50,
   cardActive: COLORS.cobalt,
+  cardActiveAlt: COLORS.purpurLight,
+  onCardActive: COLORS.white,
   cardDark: COLORS.gray800,
   cardInactive: `${COLORS.cobalt}77`,
   iconBackground: COLORS.gray100,
@@ -33,9 +37,9 @@ export const LIGHT_THEME: UnwrappedTheme = {
   fontMedium: COLORS.gray800,
   fontLight: COLORS.gray300,
   fontInverse: COLORS.offWhite,
-  primary: COLORS.cobalt,
+  primary: COLORS.orange,
   border: COLORS.gray50,
-  avatarBackgrounds: ['#29a', '#a92', '#9a2', '#92a'],
+  avatarBackgrounds: ['#caf', '#acf', '#fac', '#fca'],
 };
 
 export const DARK_THEME_WRAPPED = {

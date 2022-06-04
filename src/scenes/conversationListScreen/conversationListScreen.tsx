@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import ConversationDisplay from '../../components/conversationDisplay';
 import {SPACE} from '../../style/theme/misc';
@@ -7,23 +7,41 @@ import {useQuery} from 'react-query';
 import getConversations from '../../service/api/requests/getConversations';
 import getContacts from '../../service/api/requests/getContacts';
 import ConversationWithName from '../../model/types/conversationWithName';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from './components/header';
+import ROUTE from '../../nav/routes';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
 };
 
+export type Filter = 'NONE' | 'MAIL' | 'SMS';
+
 type RenderItemParams = {
   item: ConversationWithName;
 };
 
-const ConversationListScreen = ({}: ScreenProps) => {
+const ConversationListScreen = ({navigation}: ScreenProps) => {
   const {data: conversations} = useQuery('conversations', getConversations);
   const {data: contacts} = useQuery('contacts', getContacts);
+  const [filter, setFilter] = useState<Filter>('NONE');
 
   const [conversationsWithNames, setConversationsWithNames] = useState<
     ConversationWithName[]
   >([]);
+
+  const renderConversationDisplay = ({item}: RenderItemParams) => {
+    return (
+      <ConversationDisplay
+        conversationWithName={item}
+        style={styles.conversationItem}
+        onPress={() =>
+          navigation.navigate(ROUTE.CONVERSATION_DETAILS, {
+            conversationWithName: item,
+          })
+        }
+      />
+    );
+  };
 
   useEffect(() => {
     const convosWithNames: ConversationWithName[] = [];
@@ -41,26 +59,23 @@ const ConversationListScreen = ({}: ScreenProps) => {
         }
       });
     }
-    setConversationsWithNames(convosWithNames);
-  }, [conversations, contacts]);
-
-  const renderConversationDisplay = ({item}: RenderItemParams) => {
-    return (
-      <ConversationDisplay
-        conversationWithName={item}
-        style={styles.conversationItem}
-      />
+    setConversationsWithNames(
+      convosWithNames.filter(
+        c => c.conversationType === filter || filter === 'NONE',
+      ),
     );
-  };
+  }, [conversations, contacts, filter]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
         data={conversationsWithNames}
         renderItem={renderConversationDisplay}
         style={styles.flatList}
+        contentContainerStyle={styles.flatListContent}
       />
-    </SafeAreaView>
+      <Header filter={filter} setFilter={setFilter} />
+    </View>
   );
 };
 export default ConversationListScreen;
@@ -68,11 +83,13 @@ export default ConversationListScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: SPACE.sidePadding,
   },
   flatList: {
     flex: 1,
+  },
+  flatListContent: {
+    paddingHorizontal: SPACE.sidePadding,
+    paddingTop: SPACE.headerHeight + SPACE.s8,
   },
   conversationItem: {
     marginBottom: SPACE.xs4,

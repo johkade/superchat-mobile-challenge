@@ -5,9 +5,11 @@ import ROUTES from './routes';
 
 import useWrappedTheme from '../style/theme/hooks/useWrappedTheme';
 import ConversationListScreen from '../scenes/conversationListScreen/conversationListScreen';
+import ConversationDetailsScreen from '../scenes/conversationDetailsScreen/conversationDetailsScreen';
+import {FC} from '../style/theme/fontConfig';
 
 const RootStackNav = createNativeStackNavigator();
-const navConfig = {headerShown: false};
+const navConfig = {headerShown: true};
 
 const RootStack = () => {
   const wrappedTheme = useWrappedTheme();
@@ -15,11 +17,22 @@ const RootStack = () => {
   return (
     <NavigationContainer theme={wrappedTheme}>
       {/*@ts-ignore TODO: fix ts error (typing) */}
-      <RootStackNav.Navigator screenOptions={navConfig}>
+      <RootStackNav.Navigator
+        screenOptions={{
+          headerShown: true,
+          headerTitleStyle: FC.h3,
+          headerBackTitleStyle: FC.textL,
+          headerTintColor: wrappedTheme.colors.text,
+          headerBackTitle: 'Back',
+        }}>
         <RootStackNav.Screen
           name={ROUTES.CONVERSATION_LIST}
           component={ConversationListScreen}
-          options={{title: 'challengeBro'}}
+          options={{title: 'Conversations'}}
+        />
+        <RootStackNav.Screen
+          name={ROUTES.CONVERSATION_DETAILS}
+          component={ConversationDetailsScreen}
         />
       </RootStackNav.Navigator>
     </NavigationContainer>
