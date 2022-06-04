@@ -1,4 +1,4 @@
-import COLORS from "../colors";
+import COLORS from '../colors';
 
 type UnwrappedTheme = {
   background: string;
@@ -15,5 +15,6 @@ type UnwrappedTheme = {
   text: string;
   border: string;
   notification: string;
+  avatarBackgrounds: string[];
 };
 export default UnwrappedTheme;

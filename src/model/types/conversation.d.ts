@@ -1,6 +1,6 @@
 type Conversation = {
   id: number;
   contactId: number;
-  conversationType: 'Mail' | 'SMS';
+  conversationType: 'MAIL' | 'SMS';
 };
 export default Conversation;

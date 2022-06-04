@@ -1,35 +1,46 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import Avatar from './components';
-import Contact from '../../model/types/contact';
-import Conversation from '../../model/types/conversation';
 import CText from '../cText';
 import {FC} from '../../style/theme/fontConfig';
-import {BORDER_RADIUS, ICON_SIZE, SPACE} from '../../style/theme/misc';
+import {
+  ACTIVE_OPACITY,
+  BORDER_RADIUS,
+  ICON_SIZE,
+  SPACE,
+} from '../../style/theme/misc';
 import CIcon from '../cIcon';
 import {AvailableIcon} from '../cIcon/cIcon';
 import useTheme from '../../style/theme/hooks/useTheme';
+import ConversationWithName from '../../model/types/conversationWithName';
+import UnwrappedTheme from '../../style/theme/types/UnwrappedTheme';
 
-type Props = {conversation: Conversation; contact: Contact};
+type Props = {conversationWithName: ConversationWithName; style: ViewStyle};
 
-const ConversationDisplay = ({conversation, contact}: Props) => {
+const iconsForType: {MAIL: AvailableIcon; SMS: AvailableIcon} = {
+  MAIL: 'mail-outline',
+  SMS: 'chatbubble-outline',
+};
+
+const ConversationDisplay = ({conversationWithName, style}: Props) => {
   const theme = useTheme();
+  const {first_name, last_name, conversationType, id} = conversationWithName;
 
-  const icon: AvailableIcon =
-    conversation.conversationType === 'Mail'
-      ? 'mail-outline'
-      : 'chatbubble-outline';
+  const icon: AvailableIcon = iconsForType[conversationType];
+  const avatarBg = getAvatarBackground(theme, id);
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.card}]}>
-      <Avatar letter={contact.firstName[0]} bg={'#543'} />
+    <TouchableOpacity
+      activeOpacity={ACTIVE_OPACITY}
+      style={[styles.container, {backgroundColor: theme.card}, style]}>
+      <Avatar letter={first_name?.[0] ?? '?'} bg={avatarBg} />
       <CText
-        text={`${contact.firstName} ${contact.lastName} `}
+        text={`${first_name} ${last_name}`}
         fontConfig={FC.h3}
         style={styles.text}
       />
       <CIcon icon={icon} size={ICON_SIZE.m16} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -44,3 +55,7 @@ const styles = StyleSheet.create({
   text: {flex: 1, marginHorizontal: SPACE.s8},
 });
 export default ConversationDisplay;
+
+function getAvatarBackground(theme: UnwrappedTheme, id: number) {
+  return theme.avatarBackgrounds[id % theme.avatarBackgrounds.length];
+}
