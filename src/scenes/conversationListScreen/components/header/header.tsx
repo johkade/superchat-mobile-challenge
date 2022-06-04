@@ -18,7 +18,7 @@ type Props = {
 const Header = ({filter, setFilter}: Props) => {
   const theme = useTheme();
   const {width} = useWindowDimensions();
-  const paddingHorizontal = width > 800 ? width * 0.2 : 0;
+  const paddingHorizontal = width > 800 ? width * 0.2 : SPACE.sidePadding;
   return (
     <View
       style={[
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     ...BOX_SHADOW_STYLE,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: SPACE.sidePadding,
   },
   filterButton: {
     marginRight: SPACE.m12,
