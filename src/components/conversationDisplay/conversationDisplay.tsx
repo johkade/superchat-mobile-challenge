@@ -38,9 +38,9 @@ const ConversationDisplay = ({conversationWithName, style, onPress}: Props) => {
       activeOpacity={ACTIVE_OPACITY}
       style={[styles.container, {backgroundColor: theme.card}, style]}
       onPress={() => onPress(conversationWithName)}>
-      <Avatar letter={first_name?.[0] ?? '?'} bg={avatarBg} />
+      <Avatar letter={first_name?.[0] ?? last_name?.[0] ?? '?'} bg={avatarBg} />
       <CText
-        text={`${first_name} ${last_name}`}
+        text={`${first_name ?? ''} ${last_name ?? ''}`}
         fontConfig={FC.h3}
         style={styles.text}
       />

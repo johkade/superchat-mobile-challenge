@@ -50,7 +50,7 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
     if (conversations?.length && contacts?.length) {
       conversations?.forEach(conv => {
         const contact = contacts?.find(cont => cont.id === conv.contactId);
-        if (contact && contact.first_name && contact.last_name) {
+        if (contact && (contact.first_name || contact.last_name)) {
           const convoWithName: ConversationWithName = {
             ...conv,
             first_name: contact.first_name,

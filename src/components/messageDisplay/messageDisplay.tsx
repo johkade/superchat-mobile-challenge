@@ -11,7 +11,7 @@ type Props = {message: Message; style: ViewStyle};
 const MessageDisplay = ({message, style}: Props) => {
   const theme = useTheme();
   const {payload} = message;
-  const fromMe = useMemo(() => Math.random() > 0.5, []);
+  const fromMe = useMemo(() => message.payload[0] > 'm', []);
 
   const dynamicStyle: ViewStyle[] = [
     styles.container,

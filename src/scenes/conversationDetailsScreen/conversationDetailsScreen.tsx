@@ -100,5 +100,5 @@ const styles = StyleSheet.create({
 function getTitle(conversationWithName: ConversationWithName) {
   const {conversationType, first_name, last_name} = conversationWithName;
   const typeString = conversationType === 'MAIL' ? 'Mails' : 'Messages';
-  return `${typeString} by ${first_name} ${last_name}`;
+  return `${typeString} with ${first_name ?? ''} ${last_name ?? ''}`;
 }
