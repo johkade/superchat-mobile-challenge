@@ -28,10 +28,11 @@ const iconsForType: {MAIL: AvailableIcon; SMS: AvailableIcon} = {
 
 const ConversationDisplay = ({conversationWithName, style, onPress}: Props) => {
   const theme = useTheme();
-  const {first_name, last_name, conversationType, id} = conversationWithName;
+  const {first_name, last_name, conversationType, contactId} =
+    conversationWithName;
 
   const icon: AvailableIcon = iconsForType[conversationType];
-  const avatarBg = getAvatarBackground(theme, id);
+  const avatarBg = getAvatarBackground(theme, contactId);
 
   return (
     <TouchableOpacity

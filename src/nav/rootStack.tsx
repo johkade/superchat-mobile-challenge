@@ -8,9 +8,9 @@ import ConversationListScreen from '../scenes/conversationListScreen/conversatio
 import ConversationDetailsScreen from '../scenes/conversationDetailsScreen/conversationDetailsScreen';
 import {FC} from '../style/theme/fontConfig';
 import ContactListScreen from '../scenes/contactListScreen/contactListScreen';
+import ContactDetailsScreen from '../scenes/contactDetailsScreen/contactDetailsScreen';
 
 const RootStackNav = createNativeStackNavigator();
-const navConfig = {headerShown: true};
 
 const RootStack = () => {
   const wrappedTheme = useWrappedTheme();
@@ -39,7 +39,12 @@ const RootStack = () => {
         <RootStackNav.Screen
           name={ROUTES.CONTACT_LIST}
           component={ContactListScreen}
-          options={{title: 'Conctacts'}}
+          options={{title: 'Contacts'}}
+        />
+        <RootStackNav.Screen
+          name={ROUTES.CONTACT_DETAILS}
+          component={ContactDetailsScreen}
+          options={{title: ''}}
         />
       </RootStackNav.Navigator>
     </NavigationContainer>
