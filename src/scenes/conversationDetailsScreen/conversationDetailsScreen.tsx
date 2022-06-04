@@ -70,6 +70,7 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
             data={messages}
             renderItem={renderConversationDisplay}
             style={styles.flatList}
+            keyboardShouldPersistTaps={'handled'}
             contentContainerStyle={styles.flatListContent}
             ListHeaderComponent={
               <MessageBar
