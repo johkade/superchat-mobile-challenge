@@ -19,7 +19,7 @@ export const DARK_THEME: UnwrappedTheme = {
   fontInverse: COLORS.offBlack,
   primary: COLORS.orange,
   border: COLORS.gray800,
-  avatarBackgrounds: ['#990', '#009', '#090', '#909'],
+  avatarBackgrounds: ['#990', '#089', '#090', '#909'],
 };
 
 export const LIGHT_THEME: UnwrappedTheme = {

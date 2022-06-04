@@ -22,7 +22,6 @@ const FilterButton = ({setFilter, style, filter, activeFilter}: Props) => {
     styles.container,
     {
       backgroundColor: active ? theme.cardActive : theme.card,
-      borderColor: active ? textColor : 'transparent',
     },
     style,
   ];
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
     paddingRight: SPACE.m12,
     paddingVertical: SPACE.xxs2,
     borderRadius: BORDER_RADIUS.s,
-    borderWidth: 1,
   },
   icon: {
     marginRight: SPACE.xxs2,

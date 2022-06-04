@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {SPACE} from '../../style/theme/misc';
-import {useMutation, useQuery} from 'react-query';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
 import getMessages from '../../service/api/requests/getMessages';
 import Message from '../../model/types/message';
 import MessageDisplay from '../../components/messageDisplay';
@@ -16,7 +16,6 @@ import MessageBar from './components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useHeaderHeight} from '@react-navigation/elements';
 import postMessage from '../../service/api/requests/postMessage';
-import {queryClient} from '../../../App';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -36,11 +35,12 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
     route.params.conversationWithName;
   const queryKey = 'messages' + id;
 
+  const queryClient = useQueryClient();
   const {data: messages} = useQuery(queryKey, () => getMessages(id));
 
   const {mutate: send} = useMutation(postMessage, {
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKey);
+      queryClient?.invalidateQueries(queryKey);
       setNewMessage('');
     },
   });

@@ -9,6 +9,7 @@ import ConversationDetailsScreen from '../scenes/conversationDetailsScreen/conve
 import {FC} from '../style/theme/fontConfig';
 import ContactListScreen from '../scenes/contactListScreen/contactListScreen';
 import ContactDetailsScreen from '../scenes/contactDetailsScreen/contactDetailsScreen';
+import ThemeToggleButton from '../components/themeToggleButton';
 
 const RootStackNav = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const RootStack = () => {
           headerBackTitleStyle: FC.textL,
           headerTintColor: wrappedTheme.colors.text,
           headerBackTitle: 'Back',
+          headerRight: ThemeToggleButton,
         }}>
         <RootStackNav.Screen
           name={ROUTES.CONVERSATION_LIST}
