@@ -1,5 +1,12 @@
 import React, {useLayoutEffect} from 'react';
-import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Linking,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {SPACE} from '../../style/theme/misc';
 
@@ -12,6 +19,11 @@ import getAvatarBackground from '../../util/getAvatarBackground';
 import useTheme from '../../style/theme/hooks/useTheme';
 import {FC} from '../../style/theme/fontConfig';
 import CText from '../../components/cText';
+import ROUTE from '../../nav/routes';
+import ConversationWithName from '../../model/types/conversationWithName';
+import {useMutation, useQueryClient} from 'react-query';
+import postConversation from '../../service/api/requests/postConversation';
+import Conversation, {ConversationType} from '../../model/types/conversation';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -21,6 +33,19 @@ type ScreenProps = {
 const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
   const theme = useTheme();
   const {id, first_name, last_name, email, phone} = route.params.contact;
+  const queryClient = useQueryClient();
+
+  const {mutate: createConversation} = useMutation(postConversation, {
+    onSuccess: response => {
+      queryClient.invalidateQueries('conversations');
+      const conversationWithName: ConversationWithName = {
+        ...response,
+        last_name,
+        first_name,
+      };
+      navigation.navigate(ROUTE.CONVERSATION_DETAILS, {conversationWithName});
+    },
+  });
 
   const headerHeight = useHeaderHeight();
 
@@ -28,7 +53,35 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
     navigation.setOptions({title: getTitle(route.params.contact)});
   }, [navigation, route.params.contact]);
 
-  const onNewConversation = () => {};
+  const navigateToExistingOrNewConversation = (type: ConversationType) => {
+    const conversations: Conversation[] | undefined =
+      queryClient.getQueryData('conversations');
+
+    const existingConv = conversations?.find(
+      conv => conv.contactId === id && conv.conversationType === type,
+    );
+    if (existingConv) {
+      navigation.navigate(ROUTE.CONVERSATION_DETAILS, {
+        conversationWithName: {...existingConv, last_name, first_name},
+      });
+    } else {
+      createConversation({conversationType: type, contactId: id});
+    }
+  };
+
+  const onEditContact = () => {};
+
+  const onPressEmail = () => {
+    Linking.openURL(`mailto:${email}`).catch(() =>
+      Alert.alert('', 'Could not open mail app to start conversation.'),
+    );
+  };
+
+  const onPressPhoneNumber = () => {
+    Linking.openURL(`tel:${phone}`).catch(() =>
+      Alert.alert('', 'Could not open phone app to start a call.'),
+    );
+  };
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.SAV}>
@@ -42,21 +95,46 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
             bg={getAvatarBackground(theme, id)}
             size={92}
             fontConfig={FC.h1}
-            style={styles.avatar}
+            style={styles.bottomMargined}
           />
           <CText
             text={`${first_name ?? ''} ${last_name ?? ''}`}
-            fontConfig={FC.h3}
+            fontConfig={FC.h1}
+            style={styles.bottomMargined}
           />
           <CText
-            text={`${email ?? 'no email available'}`}
+            text={`${email ?? 'no email address 🤷'}`}
             fontConfig={FC.textL}
+            style={styles.bottomMargined}
+            color={email ? theme.secondary : theme.fontLight}
+            onPress={email ? onPressEmail : undefined}
           />
-          <CText text={`${phone ?? ''}`} fontConfig={FC.textL} />
-          <FloatingActionButton
-            onPress={onNewConversation}
-            icon={'chatbubble-outline'}
+          <CText
+            text={`${phone ?? 'no phone number 🤷'}`}
+            fontConfig={FC.textL}
+            color={phone ? theme.secondary : theme.fontLight}
+            onPress={email ? onPressPhoneNumber : undefined}
           />
+          <View style={styles.actionButtonContainer}>
+            {phone?.length && (
+              <FloatingActionButton
+                onPress={() => navigateToExistingOrNewConversation('SMS')}
+                icon={'chatbubble-outline'}
+              />
+            )}
+            {email?.length && (
+              <FloatingActionButton
+                onPress={() => navigateToExistingOrNewConversation('MAIL')}
+                icon={'mail-outline'}
+                style={styles.actionButton}
+              />
+            )}
+            <FloatingActionButton
+              onPress={onEditContact}
+              icon={'pencil-outline'}
+              style={styles.actionButton}
+            />
+          </View>
         </>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -69,13 +147,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: SPACE.l16,
+    paddingBottom: 64,
     alignItems: 'center',
   },
-  messageItem: {
-    marginBottom: SPACE.m12,
-    marginHorizontal: SPACE.sidePadding,
+  actionButtonContainer: {
+    alignSelf: 'flex-end',
+    marginTop: 'auto',
+    marginBottom: 64,
+    marginRight: SPACE.sidePadding,
   },
-  avatar: {
+  actionButton: {marginTop: SPACE.s8},
+  bottomMargined: {
     marginBottom: SPACE.m12,
   },
 });

@@ -17,7 +17,8 @@ export type AvailableIcon =
   | 'filter-outline'
   | 'send-outline'
   | 'person-outline'
-  | 'moon-outline';
+  | 'moon-outline'
+  | 'pencil-outline';
 
 type Props = {
   icon: AvailableIcon;

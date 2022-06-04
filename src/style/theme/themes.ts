@@ -18,6 +18,7 @@ export const DARK_THEME: UnwrappedTheme = {
   fontLight: COLORS.gray300,
   fontInverse: COLORS.offBlack,
   primary: COLORS.orange,
+  secondary: COLORS.cyan,
   border: COLORS.gray800,
   avatarBackgrounds: ['#990', '#089', '#090', '#909'],
 };
@@ -38,6 +39,7 @@ export const LIGHT_THEME: UnwrappedTheme = {
   fontLight: COLORS.gray300,
   fontInverse: COLORS.offWhite,
   primary: COLORS.orange,
+  secondary: COLORS.cyan,
   border: COLORS.gray50,
   avatarBackgrounds: ['#caf', '#acf', '#fac', '#fca'],
 };

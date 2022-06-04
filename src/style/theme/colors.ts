@@ -12,6 +12,7 @@ const COLORS = {
   paleBlue: '#94A3B8',
   offBlack: '#1E293B',
   orange: '#e14412',
+  cyan: '#1c81a1',
 };
 
 export default COLORS;
