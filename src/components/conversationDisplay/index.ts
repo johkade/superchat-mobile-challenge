@@ -1,1 +1,1 @@
-export {default} from './cText';
+export {default} from './conversationDisplay';

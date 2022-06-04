@@ -1,8 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
-import CText from '../../components/cText/cText';
-import {FC} from '../../style/theme/fontConfig';
+import ConversationDisplay from '../../components/conversationDisplay';
+import {
+  sampleContact,
+  sampleMailConversation,
+  sampleSmsConversation,
+} from '../../model/samples';
+import {SPACE} from '../../style/theme/misc';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -11,12 +16,20 @@ type ScreenProps = {
 const ConversationListScreen = ({}: ScreenProps) => {
   return (
     <View style={styles.container}>
-      <CText text={'hi'} fontConfig={FC.textL} color={'#000'} />
+      <ConversationDisplay
+        conversation={sampleSmsConversation}
+        contact={sampleContact}
+      />
     </View>
   );
 };
 export default ConversationListScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: SPACE.sidePadding,
+  },
 });

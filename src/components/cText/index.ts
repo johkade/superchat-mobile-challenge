@@ -1,1 +1,1 @@
-export {default} from './cIcon';
+export {default} from './cText';

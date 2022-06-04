@@ -1,6 +1,7 @@
 export const ACTIVE_OPACITY = 0.5;
 
 export const SPACE = {
+  sidePadding: 24,
   xxl32: 32,
   xl24: 24,
   l16: 16,
@@ -10,8 +11,9 @@ export const SPACE = {
   xxs2: 2,
 };
 export const BORDER_RADIUS = {
-  full: 1000,
   m: 12,
+  s: 8,
+  xs: 4,
 };
 
 export const ICON_SIZE = {
