@@ -3,48 +3,34 @@ import {StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import Avatar from '../avatar';
 import CText from '../cText';
 import {FC} from '../../style/theme/fontConfig';
-import {
-  ACTIVE_OPACITY,
-  BORDER_RADIUS,
-  ICON_SIZE,
-  SPACE,
-} from '../../style/theme/misc';
-import CIcon from '../cIcon';
-import {AvailableIcon} from '../cIcon/cIcon';
+import {ACTIVE_OPACITY, BORDER_RADIUS, SPACE} from '../../style/theme/misc';
 import useTheme from '../../style/theme/hooks/useTheme';
-import ConversationWithName from '../../model/types/conversationWithName';
+import Contact from '../../model/types/contact';
 import getAvatarBackground from '../../util/getAvatarBackground';
 
 type Props = {
-  conversationWithName: ConversationWithName;
+  contact: Contact;
   style: ViewStyle;
-  onPress: (convWithName: ConversationWithName) => void;
+  onPress: (contact: Contact) => void;
 };
 
-const iconsForType: {MAIL: AvailableIcon; SMS: AvailableIcon} = {
-  MAIL: 'mail-outline',
-  SMS: 'chatbubble-outline',
-};
-
-const ConversationDisplay = ({conversationWithName, style, onPress}: Props) => {
+const ContactDisplay = ({contact, style, onPress}: Props) => {
   const theme = useTheme();
-  const {first_name, last_name, conversationType, id} = conversationWithName;
+  const {first_name, last_name, id} = contact;
 
-  const icon: AvailableIcon = iconsForType[conversationType];
   const avatarBg = getAvatarBackground(theme, id);
 
   return (
     <TouchableOpacity
       activeOpacity={ACTIVE_OPACITY}
       style={[styles.container, {backgroundColor: theme.card}, style]}
-      onPress={() => onPress(conversationWithName)}>
-      <Avatar letter={first_name?.[0] ?? '?'} bg={avatarBg} />
+      onPress={() => onPress(contact)}>
+      <Avatar letter={first_name?.[0] ?? last_name?.[0] ?? '?'} bg={avatarBg} />
       <CText
-        text={`${first_name} ${last_name}`}
+        text={`${first_name ?? ''} ${last_name ?? ''}`}
         fontConfig={FC.h3}
         style={styles.text}
       />
-      <CIcon icon={icon} size={ICON_SIZE.m16} />
     </TouchableOpacity>
   );
 };
@@ -59,4 +45,4 @@ const styles = StyleSheet.create({
   },
   text: {flex: 1, marginHorizontal: SPACE.s8},
 });
-export default ConversationDisplay;
+export default ContactDisplay;

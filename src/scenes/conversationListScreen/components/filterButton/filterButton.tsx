@@ -33,7 +33,6 @@ const FilterButton = ({setFilter, style, filter, activeFilter}: Props) => {
       <CIcon
         icon={filter === 'MAIL' ? 'mail-outline' : 'chatbubble-outline'}
         style={styles.icon}
-        onPress={onPress}
         color={textColor}
       />
       <CText

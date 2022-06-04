@@ -9,6 +9,7 @@ import getContacts from '../../service/api/requests/getContacts';
 import ConversationWithName from '../../model/types/conversationWithName';
 import Header from './components/header';
 import ROUTE from '../../nav/routes';
+import ToContactsButton from './components/toContactsButton';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -75,6 +76,9 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
         contentContainerStyle={styles.flatListContent}
       />
       <Header filter={filter} setFilter={setFilter} />
+      <ToContactsButton
+        onPress={() => navigation.navigate(ROUTE.CONTACT_LIST)}
+      />
     </View>
   );
 };

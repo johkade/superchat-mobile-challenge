@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import CText from '../../cText';
-import {FC} from '../../../style/theme/fontConfig';
-import {BORDER_RADIUS, SPACE} from '../../../style/theme/misc';
+import CText from '../cText';
+import {FC} from '../../style/theme/fontConfig';
+import {BORDER_RADIUS, SPACE} from '../../style/theme/misc';
 
 type Props = {letter: string; style?: ViewStyle; bg: string};
 
