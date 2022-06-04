@@ -1,5 +1,11 @@
 import React from 'react';
-import {GestureResponderEvent, StyleSheet, TextInput, View} from 'react-native';
+import {
+  GestureResponderEvent,
+  Platform,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import CIcon from '../../../components/cIcon';
 import useTheme from '../../../style/theme/hooks/useTheme';
 import {ICON_SIZE, SPACE} from '../../../style/theme/misc';
@@ -21,7 +27,13 @@ const MessageBar = ({onSend, setText, text}: Props) => {
         <TextInput
           value={text}
           onChangeText={setText}
-          style={[styles.input, {color: theme.fontStd}]}
+          style={StyleSheet.flatten([
+            styles.input,
+            Platform.select({
+              web: {color: theme.fontStd, outline: 'none'},
+              default: {color: theme.fontStd},
+            }),
+          ])}
           placeholder={'Jot something down...'}
           placeholderTextColor={theme.fontLight}
         />
@@ -47,7 +59,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: SPACE.sidePadding,
+    paddingRight: SPACE.sidePadding,
   },
   input: {
     flex: 1,
@@ -55,5 +67,6 @@ const styles = StyleSheet.create({
     marginRight: SPACE.s8,
     alignSelf: 'stretch',
     ...FC.textL,
+    paddingLeft: SPACE.sidePadding,
   },
 });

@@ -62,7 +62,9 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={headerHeight}>
+          keyboardVerticalOffset={
+            headerHeight + Platform.select({android: 80, default: 0})
+          }>
           <FlatList
             inverted
             data={messages}
