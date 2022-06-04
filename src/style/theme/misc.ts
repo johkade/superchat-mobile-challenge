@@ -1,7 +1,7 @@
 export const ACTIVE_OPACITY = 0.5;
 
 export const SPACE = {
-  sidePadding: 24,
+  sidePadding: 16,
   headerHeight: 48,
   messageBarHeight: 48,
   xxl32: 32,

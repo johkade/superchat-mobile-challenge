@@ -7,6 +7,7 @@ import getContacts from '../../service/api/requests/getContacts';
 import ROUTE from '../../nav/routes';
 import Contact from '../../model/types/contact';
 import ContactDisplay from '../../components/contactDisplay';
+import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -34,14 +35,14 @@ const ContactListScreen = ({navigation}: ScreenProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ResponsiveScreenWrapper style={styles.container}>
       <FlatList
         data={contacts}
         renderItem={renderContactDisplay}
         style={styles.flatList}
         contentContainerStyle={styles.flatListContent}
       />
-    </View>
+    </ResponsiveScreenWrapper>
   );
 };
 export default ContactListScreen;

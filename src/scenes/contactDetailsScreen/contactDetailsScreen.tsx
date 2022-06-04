@@ -24,6 +24,7 @@ import ConversationWithName from '../../model/types/conversationWithName';
 import {useMutation, useQueryClient} from 'react-query';
 import postConversation from '../../service/api/requests/postConversation';
 import Conversation, {ConversationType} from '../../model/types/conversation';
+import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -84,60 +85,62 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style={styles.SAV}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={headerHeight}>
-        <>
-          <Avatar
-            letter={(first_name ?? last_name ?? '?')[0]}
-            bg={getAvatarBackground(theme, id)}
-            size={92}
-            fontConfig={FC.h1}
-            style={styles.bottomMargined}
-          />
-          <CText
-            text={`${first_name ?? ''} ${last_name ?? ''}`}
-            fontConfig={FC.h1}
-            style={styles.bottomMargined}
-          />
-          <CText
-            text={`${email ?? 'no email address 🤷'}`}
-            fontConfig={FC.textL}
-            style={styles.bottomMargined}
-            color={email ? theme.secondary : theme.fontLight}
-            onPress={email ? onPressEmail : undefined}
-          />
-          <CText
-            text={`${phone ?? 'no phone number 🤷'}`}
-            fontConfig={FC.textL}
-            color={phone ? theme.secondary : theme.fontLight}
-            onPress={email ? onPressPhoneNumber : undefined}
-          />
-          <View style={styles.actionButtonContainer}>
-            {phone?.length && (
+    <ResponsiveScreenWrapper>
+      <SafeAreaView edges={['bottom']} style={styles.SAV}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={headerHeight}>
+          <>
+            <Avatar
+              letter={(first_name ?? last_name ?? '?')[0]}
+              bg={getAvatarBackground(theme, id)}
+              size={92}
+              fontConfig={FC.h1}
+              style={styles.bottomMargined}
+            />
+            <CText
+              text={`${first_name ?? ''} ${last_name ?? ''}`}
+              fontConfig={FC.h1}
+              style={styles.bottomMargined}
+            />
+            <CText
+              text={`${email ?? 'no email address 🤷'}`}
+              fontConfig={FC.textL}
+              style={styles.bottomMargined}
+              color={email ? theme.secondary : theme.fontLight}
+              onPress={email ? onPressEmail : undefined}
+            />
+            <CText
+              text={`${phone ?? 'no phone number 🤷'}`}
+              fontConfig={FC.textL}
+              color={phone ? theme.secondary : theme.fontLight}
+              onPress={email ? onPressPhoneNumber : undefined}
+            />
+            <View style={styles.actionButtonContainer}>
+              {phone?.length && (
+                <FloatingActionButton
+                  onPress={() => navigateToExistingOrNewConversation('SMS')}
+                  icon={'chatbubble-outline'}
+                />
+              )}
+              {email?.length && (
+                <FloatingActionButton
+                  onPress={() => navigateToExistingOrNewConversation('MAIL')}
+                  icon={'mail-outline'}
+                  style={styles.actionButton}
+                />
+              )}
               <FloatingActionButton
-                onPress={() => navigateToExistingOrNewConversation('SMS')}
-                icon={'chatbubble-outline'}
-              />
-            )}
-            {email?.length && (
-              <FloatingActionButton
-                onPress={() => navigateToExistingOrNewConversation('MAIL')}
-                icon={'mail-outline'}
+                onPress={onEditContact}
+                icon={'pencil-outline'}
                 style={styles.actionButton}
               />
-            )}
-            <FloatingActionButton
-              onPress={onEditContact}
-              icon={'pencil-outline'}
-              style={styles.actionButton}
-            />
-          </View>
-        </>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+            </View>
+          </>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </ResponsiveScreenWrapper>
   );
 };
 export default ContactDetailsScreen;

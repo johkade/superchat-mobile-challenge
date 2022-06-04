@@ -16,6 +16,7 @@ import MessageBar from './components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useHeaderHeight} from '@react-navigation/elements';
 import postMessage from '../../service/api/requests/postMessage';
+import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -31,8 +32,7 @@ const renderConversationDisplay = ({item}: RenderItemParams) => {
 };
 
 const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
-  const {id, conversationType, first_name, last_name, contactId} =
-    route.params.conversationWithName;
+  const {id} = route.params.conversationWithName;
   const queryKey = 'messages' + id;
 
   const queryClient = useQueryClient();
@@ -57,27 +57,29 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style={styles.SAV}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={headerHeight}>
-        <FlatList
-          inverted
-          data={messages}
-          renderItem={renderConversationDisplay}
-          style={styles.flatList}
-          contentContainerStyle={styles.flatListContent}
-          ListHeaderComponent={
-            <MessageBar
-              text={newMessage}
-              setText={setNewMessage}
-              onSend={sendMessage}
-            />
-          }
-        />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <ResponsiveScreenWrapper>
+      <SafeAreaView edges={['bottom']} style={styles.SAV}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={headerHeight}>
+          <FlatList
+            inverted
+            data={messages}
+            renderItem={renderConversationDisplay}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatListContent}
+            ListHeaderComponent={
+              <MessageBar
+                text={newMessage}
+                setText={setNewMessage}
+                onSend={sendMessage}
+              />
+            }
+          />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </ResponsiveScreenWrapper>
   );
 };
 export default ConversationDetailsScreen;

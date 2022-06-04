@@ -10,6 +10,7 @@ import ConversationWithName from '../../model/types/conversationWithName';
 import Header from './components/header';
 import ROUTE from '../../nav/routes';
 import ToContactsButton from './components/toContactsButton';
+import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -68,18 +69,20 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
   }, [conversations, contacts, filter]);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={conversationsWithNames}
-        renderItem={renderConversationDisplay}
-        style={styles.flatList}
-        contentContainerStyle={styles.flatListContent}
-      />
+    <>
+      <ResponsiveScreenWrapper style={styles.container}>
+        <FlatList
+          data={conversationsWithNames}
+          renderItem={renderConversationDisplay}
+          style={styles.flatList}
+          contentContainerStyle={styles.flatListContent}
+        />
+        <ToContactsButton
+          onPress={() => navigation.navigate(ROUTE.CONTACT_LIST)}
+        />
+      </ResponsiveScreenWrapper>
       <Header filter={filter} setFilter={setFilter} />
-      <ToContactsButton
-        onPress={() => navigation.navigate(ROUTE.CONTACT_LIST)}
-      />
-    </View>
+    </>
   );
 };
 export default ConversationListScreen;
