@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {BORDER_RADIUS, SPACE} from '../../../../style/theme/misc';
+import {SPACE} from '../../../../style/theme/misc';
 import useTheme from '../../../../style/theme/hooks/useTheme';
 import {Filter} from '../../conversationListScreen';
 import CIcon from '../../../../components/cIcon';

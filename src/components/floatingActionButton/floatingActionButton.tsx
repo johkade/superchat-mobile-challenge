@@ -16,6 +16,7 @@ import {
 } from '../../style/theme/misc';
 import COLORS from '../../style/theme/colors';
 import hapticFeedback from '../../util/haptic/hapticFeedback';
+import {PlatformPressable} from '@react-navigation/elements';
 
 type Props = {
   onPress: () => void;
@@ -31,15 +32,16 @@ const iconSize = ICON_SIZE.l24;
 const FloatingActionButton = ({onPress = () => {}, icon, style}: Props) => {
   const theme = useTheme();
   return (
-    <TouchableOpacity
-      activeOpacity={ACTIVE_OPACITY}
+    <PlatformPressable
+      pressOpacity={ACTIVE_OPACITY}
+      pressColor={theme.ripple}
       style={[styles.container, {backgroundColor: theme.primary}, style]}
       onPress={() => {
         onPress();
         hapticFeedback('light');
       }}>
       <CIcon icon={icon} color={COLORS.white} size={iconSize} padding={0} />
-    </TouchableOpacity>
+    </PlatformPressable>
   );
 };
 export default FloatingActionButton;

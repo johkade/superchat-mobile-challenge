@@ -14,6 +14,7 @@ import {AvailableIcon} from '../cIcon/cIcon';
 import useTheme from '../../style/theme/hooks/useTheme';
 import ConversationWithContact from '../../model/types/conversationWithName';
 import getAvatarBackground from '../../util/getAvatarBackground';
+import {PlatformPressable} from '@react-navigation/elements';
 
 type Props = {
   conversationWithName: ConversationWithContact;
@@ -35,8 +36,9 @@ const ConversationDisplay = ({conversationWithName, style, onPress}: Props) => {
   const avatarBg = getAvatarBackground(theme, contactId);
 
   return (
-    <TouchableOpacity
-      activeOpacity={ACTIVE_OPACITY}
+    <PlatformPressable
+      pressOpacity={ACTIVE_OPACITY}
+      pressColor={theme.ripple}
       style={[styles.container, {backgroundColor: theme.card}, style]}
       onPress={() => onPress(conversationWithName)}>
       <Avatar letter={first_name?.[0] ?? last_name?.[0] ?? '?'} bg={avatarBg} />
@@ -46,7 +48,7 @@ const ConversationDisplay = ({conversationWithName, style, onPress}: Props) => {
         style={styles.text}
       />
       <CIcon icon={icon} size={ICON_SIZE.m16} />
-    </TouchableOpacity>
+    </PlatformPressable>
   );
 };
 

@@ -13,6 +13,7 @@ import useTheme from '../../style/theme/hooks/useTheme';
 import Contact from '../../model/types/contact';
 import getAvatarBackground from '../../util/getAvatarBackground';
 import CIcon from '../cIcon';
+import {PlatformPressable} from '@react-navigation/elements';
 
 type Props = {
   contact: Contact;
@@ -27,8 +28,9 @@ const ContactDisplay = ({contact, style, onPress}: Props) => {
   const avatarBg = getAvatarBackground(theme, id);
 
   return (
-    <TouchableOpacity
-      activeOpacity={ACTIVE_OPACITY}
+    <PlatformPressable
+      pressOpacity={ACTIVE_OPACITY}
+      pressColor={theme.ripple}
       style={[styles.container, {backgroundColor: theme.card}, style]}
       onPress={() => onPress(contact)}>
       <Avatar letter={first_name?.[0] ?? last_name?.[0] ?? '?'} bg={avatarBg} />
@@ -38,7 +40,7 @@ const ContactDisplay = ({contact, style, onPress}: Props) => {
         style={styles.text}
       />
       <CIcon icon={'person-outline'} size={ICON_SIZE.m16} />
-    </TouchableOpacity>
+    </PlatformPressable>
   );
 };
 

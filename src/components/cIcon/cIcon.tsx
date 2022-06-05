@@ -9,6 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {ACTIVE_OPACITY, ICON_SIZE} from '../../style/theme/misc';
+import {PlatformPressable} from '@react-navigation/elements';
 
 export type AvailableIcon =
   | 'mail-outline'
@@ -62,7 +63,8 @@ const CIcon = ({
   ];
   const viewProps = {style: dynamicStyle};
   const touchableProps = {
-    activeOpacity: ACTIVE_OPACITY,
+    pressOpacity: ACTIVE_OPACITY,
+    pressColor: theme.ripple,
     disabled,
     onPress,
     ...viewProps,
@@ -75,10 +77,10 @@ const CIcon = ({
   };
 
   return onPress ? (
-    <TouchableOpacity {...touchableProps}>
+    <PlatformPressable {...touchableProps}>
       {/*@ts-ignore --> TODO: fix this later (warning)*/}
       <Ionicons {...iconProps} />
-    </TouchableOpacity>
+    </PlatformPressable>
   ) : (
     <View {...touchableProps}>
       {/*@ts-ignore --> TODO: fix this later (warning)*/}

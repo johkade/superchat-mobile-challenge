@@ -22,6 +22,7 @@ export const DARK_THEME: UnwrappedTheme = {
   border: COLORS.gray800,
   avatarBackgrounds: ['#990', '#089', '#090', '#909'],
   error: COLORS.lightRed,
+  ripple: COLORS.gray100,
 };
 
 export const LIGHT_THEME: UnwrappedTheme = {
@@ -44,6 +45,7 @@ export const LIGHT_THEME: UnwrappedTheme = {
   border: COLORS.gray50,
   avatarBackgrounds: ['#caf', '#acf', '#fac', '#fca'],
   error: COLORS.red,
+  ripple: COLORS.gray100,
 };
 
 export const DARK_THEME_WRAPPED = {

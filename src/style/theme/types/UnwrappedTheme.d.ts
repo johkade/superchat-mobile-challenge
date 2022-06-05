@@ -18,5 +18,6 @@ type UnwrappedTheme = {
   avatarBackgrounds: string[];
   onCardActive: string;
   error: string;
+  ripple: string;
 };
 export default UnwrappedTheme;
