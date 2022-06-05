@@ -27,7 +27,7 @@ export const DARK_THEME: UnwrappedTheme = {
 export const LIGHT_THEME: UnwrappedTheme = {
   background: COLORS.white,
   card: COLORS.gray50,
-  cardActive: COLORS.cobalt,
+  cardActive: COLORS.cobaltLight,
   cardActiveAlt: COLORS.purpurLight,
   onCardActive: COLORS.white,
   cardDark: COLORS.gray800,

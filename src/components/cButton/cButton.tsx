@@ -24,7 +24,12 @@ const CButton = ({
   const theme = useTheme();
   const dynamicContainerStyle = [
     styles.container,
-    {backgroundColor: theme.cardActiveAlt, width},
+    {
+      backgroundColor: disabled
+        ? `${theme.cardActiveAlt}99`
+        : theme.cardActiveAlt,
+      width,
+    },
     style,
   ];
 
@@ -34,7 +39,11 @@ const CButton = ({
       onPress={onPress}
       pressOpacity={ACTIVE_OPACITY}
       style={dynamicContainerStyle}>
-      <CText text={text} fontConfig={FC.h3} />
+      <CText
+        text={text}
+        fontConfig={FC.h3}
+        color={disabled ? theme.fontLight : theme.fontStd}
+      />
     </PlatformPressable>
   );
 };
