@@ -8,6 +8,8 @@ import COLORS from '../../../../style/theme/colors';
 import FilterButton from '../filterButton';
 import CText from '../../../../components/cText';
 import {FC} from '../../../../style/theme/fontConfig';
+import AppearMoti from '../../../../components/appearMoti';
+import {AnimatePresence} from 'moti';
 
 type Props = {
   filter: Filter;
@@ -37,16 +39,18 @@ const Header = ({filter, setFilter}: Props) => {
         setFilter={setFilter}
         style={styles.filterButton}
       />
-      <>
+      <AnimatePresence>
         {filter !== 'NONE' && (
-          <CIcon
-            icon={'close-outline'}
-            onPress={() => setFilter('NONE')}
-            withBgColor={theme.cardActive}
-            color={COLORS.white}
-          />
+          <AppearMoti duration={100} translateX={25}>
+            <CIcon
+              icon={'close-outline'}
+              onPress={() => setFilter('NONE')}
+              withBgColor={theme.cardActive}
+              color={COLORS.white}
+            />
+          </AppearMoti>
         )}
-      </>
+      </AnimatePresence>
       <CText
         text={'add a filter'}
         style={[styles.filterIcon, {right: paddingHorizontal + SPACE.m12}]}
