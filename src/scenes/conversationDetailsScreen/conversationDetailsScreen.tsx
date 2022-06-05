@@ -37,7 +37,9 @@ type RenderItemParams = {
 
 const renderConversationDisplay = ({item, index}: RenderItemParams) => {
   return (
-    <AppearMoti translateX={0} delay={(index + 1) * 150}>
+    <AppearMoti
+      translateX={item.source === 'USER' ? 20 : -20}
+      delay={(index + 1) * 150}>
       <MessageDisplay message={item} style={styles.messageItem} />
     </AppearMoti>
   );
