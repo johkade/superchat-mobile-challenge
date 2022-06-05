@@ -1,13 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  GestureResponderEvent,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  TextInput,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {GestureResponderEvent, Platform, StyleSheet, View} from 'react-native';
 import CText from '../../../../components/cText';
 import useTheme from '../../../../style/theme/hooks/useTheme';
 import {FC} from '../../../../style/theme/fontConfig';
@@ -15,17 +7,15 @@ import CModal from '../../../../components/cModal';
 import {
   BORDER_RADIUS,
   BOX_SHADOW_STYLE,
-  ICON_SIZE,
   SPACE,
 } from '../../../../style/theme/misc';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useHeaderHeight} from '@react-navigation/elements';
 import {useKeyboard} from '@react-native-community/hooks';
 import CTextInput from '../../../../components/cTextInput';
 import Contact from '../../../../model/types/contact';
 import CButton from '../../../../components/cButton';
 import {useMutation} from 'react-query';
 import putContact from '../../../../service/api/requests/putContact';
+import AppearMoti from '../../../../components/appearMoti';
 
 type Props = {
   contact: Contact;
@@ -72,7 +62,10 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
       visible={visible}
       onPressOutside={onPressOutside}
       containerStyle={styles.container}>
-      <View
+      <AppearMoti
+        delay={200}
+        duration={200}
+        translateX={0}
         style={[
           styles.contentContainer,
           {
@@ -124,7 +117,7 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
           onPress={onSubmit}
           style={styles.button}
         />
-      </View>
+      </AppearMoti>
     </CModal>
   );
 };

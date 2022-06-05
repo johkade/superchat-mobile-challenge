@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {BlurView} from 'expo-blur';
+import AppearMoti from '../appearMoti';
 
 type Props = {
   visible: boolean;
