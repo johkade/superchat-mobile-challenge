@@ -20,7 +20,7 @@ import useTheme from '../../style/theme/hooks/useTheme';
 import {FC} from '../../style/theme/fontConfig';
 import CText from '../../components/cText';
 import ROUTE from '../../nav/routes';
-import ConversationWithName from '../../model/types/conversationWithName';
+import ConversationWithContact from '../../model/types/conversationWithName';
 import {useMutation, useQueryClient} from 'react-query';
 import postConversation from '../../service/api/requests/postConversation';
 import Conversation, {ConversationType} from '../../model/types/conversation';
@@ -39,7 +39,7 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
   const {mutate: createConversation} = useMutation(postConversation, {
     onSuccess: response => {
       queryClient.invalidateQueries('conversations');
-      const conversationWithName: ConversationWithName = {
+      const conversationWithName: ConversationWithContact = {
         ...response,
         last_name,
         first_name,

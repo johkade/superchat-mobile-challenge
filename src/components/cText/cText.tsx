@@ -10,9 +10,17 @@ type Props = {
   color?: string;
   style?: TextStyle | TextStyle[];
   onPress?: (event: GestureResponderEvent) => void;
+  numberOfLines?: number;
 };
 
-const CText = ({text, fontConfig = FC.textL, color, style, onPress}: Props) => {
+const CText = ({
+  text,
+  fontConfig = FC.textL,
+  color,
+  style,
+  onPress,
+  numberOfLines,
+}: Props) => {
   const theme = useTheme();
 
   const styles = {
@@ -20,7 +28,10 @@ const CText = ({text, fontConfig = FC.textL, color, style, onPress}: Props) => {
     color: color ?? theme.fontStd,
   };
   return (
-    <Text style={[styles, style]} onPress={onPress}>
+    <Text
+      style={[styles, style]}
+      onPress={onPress}
+      numberOfLines={numberOfLines}>
       {text}
     </Text>
   );

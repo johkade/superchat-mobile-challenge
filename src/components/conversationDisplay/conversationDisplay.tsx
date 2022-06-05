@@ -12,13 +12,13 @@ import {
 import CIcon from '../cIcon';
 import {AvailableIcon} from '../cIcon/cIcon';
 import useTheme from '../../style/theme/hooks/useTheme';
-import ConversationWithName from '../../model/types/conversationWithName';
+import ConversationWithContact from '../../model/types/conversationWithName';
 import getAvatarBackground from '../../util/getAvatarBackground';
 
 type Props = {
-  conversationWithName: ConversationWithName;
+  conversationWithName: ConversationWithContact;
   style: ViewStyle;
-  onPress: (convWithName: ConversationWithName) => void;
+  onPress: (convWithName: ConversationWithContact) => void;
 };
 
 const iconsForType: {MAIL: AvailableIcon; SMS: AvailableIcon} = {

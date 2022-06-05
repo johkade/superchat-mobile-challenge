@@ -26,17 +26,18 @@ const RootStack = () => {
           headerBackTitleStyle: FC.textL,
           headerTintColor: wrappedTheme.colors.text,
           headerBackTitle: 'Back',
-          headerRight: ThemeToggleButton,
         }}>
         <RootStackNav.Screen
           name={ROUTES.CONVERSATION_LIST}
           component={ConversationListScreen}
-          options={{title: 'Conversations'}}
+          options={{title: 'Conversations', headerRight: ThemeToggleButton}}
         />
         <RootStackNav.Screen
           name={ROUTES.CONVERSATION_DETAILS}
           component={ConversationDetailsScreen}
-          options={{title: ''}} //set asynchronously inside screen
+          options={{
+            title: '',
+          }} //set asynchronously inside screen
         />
         <RootStackNav.Screen
           name={ROUTES.CONTACT_LIST}
@@ -46,7 +47,7 @@ const RootStack = () => {
         <RootStackNav.Screen
           name={ROUTES.CONTACT_DETAILS}
           component={ContactDetailsScreen}
-          options={{title: ''}}
+          options={{title: ''}} //set asynchronously inside screen
         />
       </RootStackNav.Navigator>
     </NavigationContainer>

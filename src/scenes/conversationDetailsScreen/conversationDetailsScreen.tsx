@@ -11,16 +11,21 @@ import {useMutation, useQuery, useQueryClient} from 'react-query';
 import getMessages from '../../service/api/requests/getMessages';
 import Message from '../../model/types/message';
 import MessageDisplay from '../../components/messageDisplay';
-import ConversationWithName from '../../model/types/conversationWithName';
-import MessageBar from './components';
+import ConversationWithContact from '../../model/types/conversationWithName';
+import MessageBar from './components/messageBar';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useHeaderHeight} from '@react-navigation/elements';
 import postMessage from '../../service/api/requests/postMessage';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
+import HeaderTouchable from './components/headerTouchable';
+import ROUTE from '../../nav/routes';
+import Contact from '../../model/types/contact';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
-  route: {params: {conversationWithName: ConversationWithName}};
+  route: {
+    params: {conversationWithName: ConversationWithContact};
+  };
 };
 
 type RenderItemParams = {
@@ -32,7 +37,8 @@ const renderConversationDisplay = ({item}: RenderItemParams) => {
 };
 
 const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
-  const {id} = route.params.conversationWithName;
+  const {id, contactId, first_name, last_name, email, phone} =
+    route.params.conversationWithName;
   const queryKey = 'messages' + id;
 
   const queryClient = useQueryClient();
@@ -49,7 +55,27 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
   const headerHeight = useHeaderHeight();
 
   useLayoutEffect(() => {
-    navigation.setOptions({title: getTitle(route.params.conversationWithName)});
+    const title = getTitle(route.params.conversationWithName);
+    const contact: Contact = {
+      id: contactId,
+      first_name,
+      last_name,
+      email,
+      phone,
+    };
+    navigation.setOptions({
+      //title: title,
+      headerRight: () => (
+        <HeaderTouchable
+          title={title}
+          onPress={() =>
+            navigation.navigate(ROUTE.CONTACT_DETAILS, {
+              contact: contact,
+            })
+          }
+        />
+      ),
+    });
   }, [navigation, route.params.conversationWithName]);
 
   const sendMessage = () => {
@@ -102,7 +128,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function getTitle(conversationWithName: ConversationWithName) {
+function getTitle(conversationWithName: ConversationWithContact) {
   const {conversationType, first_name, last_name} = conversationWithName;
   const typeString = conversationType === 'MAIL' ? 'Mails' : 'Messages';
   return `${typeString} with ${first_name ?? ''} ${last_name ?? ''}`;

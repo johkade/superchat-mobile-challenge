@@ -6,10 +6,10 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import CIcon from '../../../components/cIcon';
-import useTheme from '../../../style/theme/hooks/useTheme';
-import {ICON_SIZE, SPACE} from '../../../style/theme/misc';
-import {FC} from '../../../style/theme/fontConfig';
+import CIcon from '../../../../components/cIcon';
+import useTheme from '../../../../style/theme/hooks/useTheme';
+import {ICON_SIZE, SPACE} from '../../../../style/theme/misc';
+import {FC} from '../../../../style/theme/fontConfig';
 
 type Props = {
   onSend: (event: GestureResponderEvent) => void;

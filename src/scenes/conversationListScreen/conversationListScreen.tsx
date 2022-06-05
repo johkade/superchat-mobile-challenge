@@ -6,7 +6,7 @@ import {SPACE} from '../../style/theme/misc';
 import {useQuery} from 'react-query';
 import getConversations from '../../service/api/requests/getConversations';
 import getContacts from '../../service/api/requests/getContacts';
-import ConversationWithName from '../../model/types/conversationWithName';
+import ConversationWithContact from '../../model/types/conversationWithName';
 import Header from './components/header';
 import ROUTE from '../../nav/routes';
 import ToContactsButton from './components/toContactsButton';
@@ -19,7 +19,7 @@ type ScreenProps = {
 export type Filter = 'NONE' | 'MAIL' | 'SMS';
 
 type RenderItemParams = {
-  item: ConversationWithName;
+  item: ConversationWithContact;
 };
 
 const ConversationListScreen = ({navigation}: ScreenProps) => {
@@ -28,7 +28,7 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
   const [filter, setFilter] = useState<Filter>('NONE');
 
   const [conversationsWithNames, setConversationsWithNames] = useState<
-    ConversationWithName[]
+    ConversationWithContact[]
   >([]);
 
   const renderConversationDisplay = ({item}: RenderItemParams) => {
@@ -46,16 +46,18 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
   };
 
   useEffect(() => {
-    const convosWithNames: ConversationWithName[] = [];
+    const convosWithNames: ConversationWithContact[] = [];
 
     if (conversations?.length && contacts?.length) {
       conversations?.forEach(conv => {
         const contact = contacts?.find(cont => cont.id === conv.contactId);
+
         if (contact && (contact.first_name || contact.last_name)) {
-          const convoWithName: ConversationWithName = {
+          // @ts-ignore
+          delete contact.id;
+          const convoWithName: ConversationWithContact = {
             ...conv,
-            first_name: contact.first_name,
-            last_name: contact.last_name,
+            ...contact,
           };
           convosWithNames.push(convoWithName);
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {SPACE} from '../../style/theme/misc';
 import {useQuery} from 'react-query';
