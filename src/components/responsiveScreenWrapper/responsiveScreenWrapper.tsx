@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   imgBg: {
     ...StyleSheet.absoluteFillObject,
-    opacity: 0.1,
+    opacity: 0.05,
   },
 });

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {GestureResponderEvent, Platform, StyleSheet, View} from 'react-native';
+import {GestureResponderEvent, Platform, StyleSheet} from 'react-native';
 import CText from '../../../../components/cText';
 import useTheme from '../../../../style/theme/hooks/useTheme';
 import {FC} from '../../../../style/theme/fontConfig';
@@ -56,6 +56,17 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
     });
     onPressOutside(undefined);
   };
+  const dynamicMotiStyle = [
+    styles.contentContainer,
+    {
+      backgroundColor: theme.background,
+      marginBottom: Platform.select({
+        android: 0,
+        ios: keyboardHeight,
+        web: 200,
+      }),
+    },
+  ];
 
   return (
     <CModal
@@ -66,17 +77,7 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
         delay={200}
         duration={200}
         translateX={0}
-        style={[
-          styles.contentContainer,
-          {
-            backgroundColor: theme.background,
-            marginBottom: Platform.select({
-              android: 0,
-              ios: keyboardHeight,
-              web: 200,
-            }),
-          },
-        ]}>
+        style={dynamicMotiStyle}>
         <CText text={'Edit Contact'} fontConfig={FC.h3} />
         <CTextInput
           value={newFirstName}
