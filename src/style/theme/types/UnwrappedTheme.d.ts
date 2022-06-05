@@ -17,5 +17,6 @@ type UnwrappedTheme = {
   notification: string;
   avatarBackgrounds: string[];
   onCardActive: string;
+  error: string;
 };
 export default UnwrappedTheme;

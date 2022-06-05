@@ -13,6 +13,8 @@ const COLORS = {
   offBlack: '#1E293B',
   orange: '#e14412',
   cyan: '#1c81a1',
+  red: '#a90737',
+  lightRed: '#dc3e6c',
 };
 
 export default COLORS;

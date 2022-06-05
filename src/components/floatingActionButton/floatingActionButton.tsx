@@ -12,6 +12,7 @@ import {
   ACTIVE_OPACITY,
   BOX_SHADOW_STYLE,
   ICON_SIZE,
+  SPACE,
 } from '../../style/theme/misc';
 import COLORS from '../../style/theme/colors';
 
@@ -20,7 +21,10 @@ type Props = {
   icon: AvailableIcon;
   style?: ViewStyle;
 };
-const sizes = {height: 48, width: 48};
+const sizes = {
+  height: SPACE.floatingActionButton,
+  width: SPACE.floatingActionButton,
+};
 const iconSize = ICON_SIZE.l24;
 
 const FloatingActionButton = ({onPress, icon, style}: Props) => {

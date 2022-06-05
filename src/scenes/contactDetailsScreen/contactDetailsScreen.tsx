@@ -1,8 +1,9 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
   Linking,
+  Modal,
   Platform,
   StyleSheet,
   View,
@@ -25,6 +26,7 @@ import {useMutation, useQueryClient} from 'react-query';
 import postConversation from '../../service/api/requests/postConversation';
 import Conversation, {ConversationType} from '../../model/types/conversation';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
+import EditContactModal from './components/editContactModal';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -35,6 +37,7 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
   const theme = useTheme();
   const {id, first_name, last_name, email, phone} = route.params.contact;
   const queryClient = useQueryClient();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const {mutate: createConversation} = useMutation(postConversation, {
     onSuccess: response => {
@@ -43,6 +46,8 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
         ...response,
         last_name,
         first_name,
+        email,
+        phone,
       };
       navigation.navigate(ROUTE.CONVERSATION_DETAILS, {conversationWithName});
     },
@@ -70,8 +75,6 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
     }
   };
 
-  const onEditContact = () => {};
-
   const onPressEmail = () => {
     Linking.openURL(`mailto:${email}`).catch(() =>
       Alert.alert('', 'Could not open mail app to start conversation.'),
@@ -85,62 +88,69 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
   };
 
   return (
-    <ResponsiveScreenWrapper>
-      <SafeAreaView edges={['bottom']} style={styles.SAV}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={headerHeight}>
-          <>
-            <Avatar
-              letter={(first_name ?? last_name ?? '?')[0]}
-              bg={getAvatarBackground(theme, id)}
-              size={92}
-              fontConfig={FC.h1}
-              style={styles.bottomMargined}
-            />
-            <CText
-              text={`${first_name ?? ''} ${last_name ?? ''}`}
-              fontConfig={FC.h1}
-              style={styles.bottomMargined}
-            />
-            <CText
-              text={`${email ?? 'no email address 🤷'}`}
-              fontConfig={FC.textL}
-              style={styles.bottomMargined}
-              color={email ? theme.secondary : theme.fontLight}
-              onPress={email ? onPressEmail : undefined}
-            />
-            <CText
-              text={`${phone ?? 'no phone number 🤷'}`}
-              fontConfig={FC.textL}
-              color={phone ? theme.secondary : theme.fontLight}
-              onPress={email ? onPressPhoneNumber : undefined}
-            />
-            <View style={styles.actionButtonContainer}>
-              {phone?.length && (
+    <>
+      <ResponsiveScreenWrapper>
+        <SafeAreaView edges={['bottom']} style={styles.SAV}>
+          <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={headerHeight}>
+            <>
+              <Avatar
+                letter={(first_name ?? last_name ?? '?')[0]}
+                bg={getAvatarBackground(theme, id)}
+                size={92}
+                fontConfig={FC.h1}
+                style={styles.bottomMargined}
+              />
+              <CText
+                text={`${first_name ?? ''} ${last_name ?? ''}`}
+                fontConfig={FC.h1}
+                style={styles.bottomMargined}
+              />
+              <CText
+                text={`${email ?? 'no email address 🤷'}`}
+                fontConfig={FC.textL}
+                style={styles.bottomMargined}
+                color={email ? theme.secondary : theme.fontLight}
+                onPress={email ? onPressEmail : undefined}
+              />
+              <CText
+                text={`${phone ?? 'no phone number 🤷'}`}
+                fontConfig={FC.textL}
+                color={phone ? theme.secondary : theme.fontLight}
+                onPress={email ? onPressPhoneNumber : undefined}
+              />
+              <View style={styles.actionButtonContainer}>
+                {phone?.length && (
+                  <FloatingActionButton
+                    onPress={() => navigateToExistingOrNewConversation('SMS')}
+                    icon={'chatbubble-outline'}
+                  />
+                )}
+                {email?.length && (
+                  <FloatingActionButton
+                    onPress={() => navigateToExistingOrNewConversation('MAIL')}
+                    icon={'mail-outline'}
+                    style={styles.actionButton}
+                  />
+                )}
                 <FloatingActionButton
-                  onPress={() => navigateToExistingOrNewConversation('SMS')}
-                  icon={'chatbubble-outline'}
-                />
-              )}
-              {email?.length && (
-                <FloatingActionButton
-                  onPress={() => navigateToExistingOrNewConversation('MAIL')}
-                  icon={'mail-outline'}
+                  onPress={() => setModalOpen(true)}
+                  icon={'pencil-outline'}
                   style={styles.actionButton}
                 />
-              )}
-              <FloatingActionButton
-                onPress={onEditContact}
-                icon={'pencil-outline'}
-                style={styles.actionButton}
-              />
-            </View>
-          </>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </ResponsiveScreenWrapper>
+              </View>
+            </>
+          </KeyboardAvoidingView>
+          <EditContactModal
+            contact={route.params.contact}
+            visible={modalOpen}
+            onPressOutside={() => setModalOpen(false)}
+          />
+        </SafeAreaView>
+      </ResponsiveScreenWrapper>
+    </>
   );
 };
 export default ContactDetailsScreen;

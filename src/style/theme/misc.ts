@@ -4,6 +4,9 @@ export const SPACE = {
   sidePadding: 16,
   headerHeight: 48,
   messageBarHeight: 48,
+  floatingActionButton: 48,
+  inputWidth: 240,
+  buttonWidth: 220,
   xxl32: 32,
   xl24: 24,
   l16: 16,
@@ -27,8 +30,8 @@ export const ICON_SIZE = {
 export const BOX_SHADOW_STYLE = {
   elevation: 4,
   shadowColor: '#000',
-  shadowOpacity: 0.5,
-  shadowRadius: 4,
+  shadowOpacity: 0.2,
+  shadowRadius: 8,
   shadowOffset: {
     width: 0,
     height: 0,

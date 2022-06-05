@@ -20,8 +20,8 @@ const imgSrc = {
 
 const ResponsiveScreenWrapper = ({children, style = {}}: Props) => {
   const {width} = useWindowDimensions();
-  const themeId = useThemeId();
   const marginHorizontal = width > 800 ? width * 0.2 : 0;
+  const themeId = useThemeId();
   return (
     <>
       <ImageBackground
