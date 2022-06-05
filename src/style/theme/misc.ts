@@ -7,6 +7,7 @@ export const SPACE = {
   floatingActionButton: 48,
   inputWidth: 240,
   buttonWidth: 220,
+  filterButtonWidth: 100,
   xxl32: 32,
   xl24: 24,
   l16: 16,

@@ -18,13 +18,7 @@ const FilterButton = ({setFilter, style, filter, activeFilter}: Props) => {
   const theme = useTheme();
   const active = filter === activeFilter;
   const textColor = active ? theme.onCardActive : theme.fontStd;
-  const dynamicStyle = [
-    styles.container,
-    {
-      backgroundColor: active ? theme.cardActive : theme.card,
-    },
-    style,
-  ];
+  const dynamicStyle = [styles.container, style];
 
   const onPress = () => setFilter(active ? 'NONE' : filter);
   return (
@@ -51,7 +45,7 @@ const styles = StyleSheet.create({
     paddingLeft: SPACE.s8,
     paddingRight: SPACE.m12,
     paddingVertical: SPACE.xxs2,
-    borderRadius: BORDER_RADIUS.s,
+    minWidth: SPACE.filterButtonWidth,
   },
   icon: {
     marginRight: SPACE.xxs2,

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {BOX_SHADOW_STYLE, SPACE} from '../../../../style/theme/misc';
+import {
+  BORDER_RADIUS,
+  BOX_SHADOW_STYLE,
+  SPACE,
+} from '../../../../style/theme/misc';
 import useTheme from '../../../../style/theme/hooks/useTheme';
 import {Filter} from '../../conversationListScreen';
 import CIcon from '../../../../components/cIcon';
@@ -9,7 +13,8 @@ import FilterButton from '../filterButton';
 import CText from '../../../../components/cText';
 import {FC} from '../../../../style/theme/fontConfig';
 import AppearMoti from '../../../../components/appearMoti';
-import {AnimatePresence} from 'moti';
+import {AnimatePresence, MotiView} from 'moti';
+import useFilterButtonAnimation from './util/useFilterButtonAnimation';
 
 type Props = {
   filter: Filter;
@@ -20,12 +25,27 @@ const Header = ({filter, setFilter}: Props) => {
   const theme = useTheme();
   const {width} = useWindowDimensions();
   const paddingHorizontal = width > 800 ? width * 0.2 : SPACE.sidePadding;
+  const {state, to} = useFilterButtonAnimation();
+
+  useEffect(() => {
+    to(filter);
+  }, [filter, to]);
+
   return (
     <View
       style={[
         styles.container,
         {backgroundColor: theme.card, paddingHorizontal},
       ]}>
+      <MotiView
+        style={[
+          styles.movingMoti,
+          {left: paddingHorizontal, backgroundColor: theme.cardActive},
+        ]}
+        state={state}
+        transition={{type: 'timing', duration: 300}}
+      />
+
       <FilterButton
         filter={'SMS'}
         activeFilter={filter}
@@ -78,5 +98,12 @@ const styles = StyleSheet.create({
   filterIcon: {
     position: 'absolute',
     top: SPACE.xs4,
+  },
+  movingMoti: {
+    position: 'absolute',
+    height: SPACE.headerHeight - SPACE.xs4 * 2,
+    bottom: SPACE.xs4,
+    width: SPACE.filterButtonWidth,
+    borderRadius: BORDER_RADIUS.s,
   },
 });
