@@ -20,6 +20,8 @@ import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/re
 import HeaderTouchable from './components/headerTouchable';
 import ROUTE from '../../nav/routes';
 import Contact from '../../model/types/contact';
+import AppearMoti from '../../components/appearMoti';
+import {AnimatePresence} from 'moti';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -30,10 +32,15 @@ type ScreenProps = {
 
 type RenderItemParams = {
   item: Message;
+  index: number;
 };
 
-const renderConversationDisplay = ({item}: RenderItemParams) => {
-  return <MessageDisplay message={item} style={styles.messageItem} />;
+const renderConversationDisplay = ({item, index}: RenderItemParams) => {
+  return (
+    <AppearMoti translateX={0} delay={(index + 1) * 150}>
+      <MessageDisplay message={item} style={styles.messageItem} />
+    </AppearMoti>
+  );
 };
 
 const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
@@ -91,22 +98,24 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
           keyboardVerticalOffset={
             headerHeight + Platform.select({android: 80, default: 0})
           }>
-          <FlatList
-            inverted
-            data={messages}
-            renderItem={renderConversationDisplay}
-            style={styles.flatList}
-            keyboardShouldPersistTaps={'handled'}
-            contentContainerStyle={styles.flatListContent}
-            bounces={false}
-            ListHeaderComponent={
-              <MessageBar
-                text={newMessage}
-                setText={setNewMessage}
-                onSend={sendMessage}
-              />
-            }
-          />
+          <AnimatePresence>
+            <FlatList
+              inverted
+              data={messages}
+              renderItem={renderConversationDisplay}
+              style={styles.flatList}
+              keyboardShouldPersistTaps={'handled'}
+              contentContainerStyle={styles.flatListContent}
+              bounces={false}
+              ListHeaderComponent={
+                <MessageBar
+                  text={newMessage}
+                  setText={setNewMessage}
+                  onSend={sendMessage}
+                />
+              }
+            />
+          </AnimatePresence>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ResponsiveScreenWrapper>

@@ -12,6 +12,7 @@ import ROUTE from '../../nav/routes';
 import ToContactsButton from './components/toContactsButton';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 import AppearMoti from '../../components/appearMoti';
+import {AnimatePresence} from 'moti';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -21,6 +22,7 @@ export type Filter = 'NONE' | 'MAIL' | 'SMS';
 
 type RenderItemParams = {
   item: ConversationWithContact;
+  index: number;
 };
 
 const ConversationListScreen = ({navigation}: ScreenProps) => {
@@ -34,15 +36,17 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
 
   const renderConversationDisplay = ({item}: RenderItemParams) => {
     return (
-      <ConversationDisplay
-        conversationWithName={item}
-        style={styles.conversationItem}
-        onPress={() =>
-          navigation.navigate(ROUTE.CONVERSATION_DETAILS, {
-            conversationWithName: item,
-          })
-        }
-      />
+      <AppearMoti translateX={0}>
+        <ConversationDisplay
+          conversationWithName={item}
+          style={styles.conversationItem}
+          onPress={() =>
+            navigation.navigate(ROUTE.CONVERSATION_DETAILS, {
+              conversationWithName: item,
+            })
+          }
+        />
+      </AppearMoti>
     );
   };
 
@@ -74,12 +78,14 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
   return (
     <>
       <ResponsiveScreenWrapper style={styles.container}>
-        <FlatList
-          data={conversationsWithNames}
-          renderItem={renderConversationDisplay}
-          style={styles.flatList}
-          contentContainerStyle={styles.flatListContent}
-        />
+        <AnimatePresence>
+          <FlatList
+            data={conversationsWithNames}
+            renderItem={renderConversationDisplay}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatListContent}
+          />
+        </AnimatePresence>
         <AppearMoti delay={800}>
           <ToContactsButton
             onPress={() => navigation.navigate(ROUTE.CONTACT_LIST)}

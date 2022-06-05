@@ -8,6 +8,7 @@ import ROUTE from '../../nav/routes';
 import Contact from '../../model/types/contact';
 import ContactDisplay from '../../components/contactDisplay';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
+import AppearMoti from '../../components/appearMoti';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -15,23 +16,26 @@ type ScreenProps = {
 
 type RenderItemParams = {
   item: Contact;
+  index: number;
 };
 
 const ContactListScreen = ({navigation}: ScreenProps) => {
   const {data: contacts} = useQuery('contactsList', getContacts);
 
-  const renderContactDisplay = ({item}: RenderItemParams) => {
+  const renderContactDisplay = ({item, index}: RenderItemParams) => {
     return (
-      <ContactDisplay
-        contact={item}
-        style={styles.contactItem}
-        onPress={() =>
-          navigation.navigate(ROUTE.CONTACT_DETAILS, {
-            contact: item,
-          })
-        }
-        key={item.id}
-      />
+      <AppearMoti delay={index * 100} translateX={index * 10} duration={400}>
+        <ContactDisplay
+          contact={item}
+          style={styles.contactItem}
+          onPress={() =>
+            navigation.navigate(ROUTE.CONTACT_DETAILS, {
+              contact: item,
+            })
+          }
+          key={item.id}
+        />
+      </AppearMoti>
     );
   };
 
