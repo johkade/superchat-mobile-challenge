@@ -15,6 +15,7 @@ import {FC} from '../../../../style/theme/fontConfig';
 import AppearMoti from '../../../../components/appearMoti';
 import {AnimatePresence, MotiView} from 'moti';
 import useFilterButtonAnimation from './util/useFilterButtonAnimation';
+import hapticFeedback from '../../../../util/haptic/hapticFeedback';
 
 type Props = {
   filter: Filter;
@@ -64,7 +65,10 @@ const Header = ({filter, setFilter}: Props) => {
           <AppearMoti duration={100} translateX={25}>
             <CIcon
               icon={'close-outline'}
-              onPress={() => setFilter('NONE')}
+              onPress={() => {
+                hapticFeedback('warning');
+                setFilter('NONE');
+              }}
               withBgColor={theme.cardActive}
               color={COLORS.white}
             />

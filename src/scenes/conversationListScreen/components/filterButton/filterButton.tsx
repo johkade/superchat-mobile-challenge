@@ -6,6 +6,7 @@ import {Filter} from '../../conversationListScreen';
 import CIcon from '../../../../components/cIcon';
 import CText from '../../../../components/cText';
 import {FC} from '../../../../style/theme/fontConfig';
+import hapticFeedback from '../../../../util/haptic/hapticFeedback';
 
 type Props = {
   filter: Filter;
@@ -20,7 +21,10 @@ const FilterButton = ({setFilter, style, filter, activeFilter}: Props) => {
   const textColor = active ? theme.onCardActive : theme.fontStd;
   const dynamicStyle = [styles.container, style];
 
-  const onPress = () => setFilter(active ? 'NONE' : filter);
+  const onPress = () => {
+    setFilter(active ? 'NONE' : filter);
+    hapticFeedback('light');
+  };
   return (
     <TouchableOpacity style={dynamicStyle} onPress={onPress}>
       <CIcon

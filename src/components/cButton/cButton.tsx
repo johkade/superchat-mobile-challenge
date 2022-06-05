@@ -1,15 +1,22 @@
 import React from 'react';
 import useTheme from '../../style/theme/hooks/useTheme';
-import {GestureResponderEvent, StyleSheet, ViewStyle} from 'react-native';
+import {
+  GestureResponderEvent,
+  Platform,
+  StyleSheet,
+  ViewStyle,
+} from 'react-native';
 import {ACTIVE_OPACITY, BORDER_RADIUS, SPACE} from '../../style/theme/misc';
 import {PlatformPressable} from '@react-navigation/elements';
 import CText from '../cText';
 import {FC} from '../../style/theme/fontConfig';
+import * as Haptics from 'expo-haptics';
+import hapticFeedback from '../../util/haptic/hapticFeedback';
 
 type Props = {
   text: string;
   style?: ViewStyle;
-  onPress?: (event: GestureResponderEvent) => void;
+  onPress?: () => void;
   disabled?: boolean;
   width?: number;
 };
@@ -17,7 +24,7 @@ type Props = {
 const CButton = ({
   text,
   style,
-  onPress,
+  onPress = () => {},
   disabled,
   width = SPACE.buttonWidth,
 }: Props) => {
@@ -36,7 +43,10 @@ const CButton = ({
   return (
     <PlatformPressable
       disabled={disabled}
-      onPress={onPress}
+      onPress={() => {
+        hapticFeedback('light');
+        onPress();
+      }}
       pressOpacity={ACTIVE_OPACITY}
       style={dynamicContainerStyle}>
       <CText

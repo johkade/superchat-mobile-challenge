@@ -15,9 +15,10 @@ import {
   SPACE,
 } from '../../style/theme/misc';
 import COLORS from '../../style/theme/colors';
+import hapticFeedback from '../../util/haptic/hapticFeedback';
 
 type Props = {
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: () => void;
   icon: AvailableIcon;
   style?: ViewStyle;
 };
@@ -27,13 +28,16 @@ const sizes = {
 };
 const iconSize = ICON_SIZE.l24;
 
-const FloatingActionButton = ({onPress, icon, style}: Props) => {
+const FloatingActionButton = ({onPress = () => {}, icon, style}: Props) => {
   const theme = useTheme();
   return (
     <TouchableOpacity
       activeOpacity={ACTIVE_OPACITY}
       style={[styles.container, {backgroundColor: theme.primary}, style]}
-      onPress={onPress}>
+      onPress={() => {
+        onPress();
+        hapticFeedback('light');
+      }}>
       <CIcon icon={icon} color={COLORS.white} size={iconSize} padding={0} />
     </TouchableOpacity>
   );

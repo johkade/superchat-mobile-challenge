@@ -22,6 +22,8 @@ import ROUTE from '../../nav/routes';
 import Contact from '../../model/types/contact';
 import AppearMoti from '../../components/appearMoti';
 import {AnimatePresence} from 'moti';
+import * as Haptics from 'expo-haptics';
+import hapticFeedback from '../../util/haptic/hapticFeedback';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -57,6 +59,7 @@ const ConversationDetailsScreen = ({navigation, route}: ScreenProps) => {
     onSuccess: () => {
       queryClient?.invalidateQueries(queryKey);
       setNewMessage('');
+      hapticFeedback('success');
     },
   });
 
