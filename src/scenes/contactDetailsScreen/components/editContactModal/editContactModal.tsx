@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   GestureResponderEvent,
   KeyboardAvoidingView,
@@ -41,6 +41,18 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
   const [newLastName, setNewLastName] = useState(last_name ?? '');
   const [newPhone, setNewPhone] = useState(phone);
   const [newEmail, setNewEmail] = useState(email);
+  const [focusIterator, setFocusIterator] = useState(0);
+  const [blurIterator, setBlurIterator] = useState(0);
+
+  useEffect(() => {
+    if (visible) {
+      setFocusIterator(prev => prev + 1);
+      setBlurIterator(0);
+    } else {
+      setBlurIterator(prev => prev + 1);
+      setFocusIterator(0);
+    }
+  }, [visible]);
 
   const {mutate: editContact} = useMutation(putContact);
 
@@ -78,7 +90,8 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
           onValueChange={t => setNewFirstName(t)}
           label={'Given name'}
           inputType={'username'}
-          focusIterator={1}
+          focusIterator={focusIterator}
+          blurIterator={blurIterator}
           withoutErrorMsg
         />
         <CTextInput

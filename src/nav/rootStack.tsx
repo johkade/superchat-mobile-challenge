@@ -26,6 +26,7 @@ const RootStack = () => {
           headerBackTitleStyle: FC.textL,
           headerTintColor: wrappedTheme.colors.text,
           headerBackTitle: 'Back',
+          animation: 'slide_from_right',
         }}>
         <RootStackNav.Screen
           name={ROUTES.CONVERSATION_LIST}

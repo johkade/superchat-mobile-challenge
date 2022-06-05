@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  Keyboard,
   Platform,
   StyleSheet,
   TextInput,
@@ -25,6 +26,7 @@ type Props = {
   placeholder?: string;
   width?: number;
   focusIterator?: number;
+  blurIterator?: number;
   inputType?: InputType;
   inputState?: InputState;
   style?: TextStyle;
@@ -48,6 +50,7 @@ const CTextInput = ({
   onValueChange,
   onFocusChanged = () => {},
   focusIterator,
+  blurIterator,
   numberOfLines = 1,
   maxLength,
   style,
@@ -75,8 +78,17 @@ const CTextInput = ({
   const inputTypeProps = INPUT_TYPE_CONFIG[inputType];
 
   useEffect(() => {
-    focusIterator && ref?.current && ref.current.focus();
+    if (focusIterator && ref?.current) {
+      Platform.OS !== 'android' && ref.current.focus();
+      Platform.OS === 'android' && setTimeout(() => ref.current?.focus(), 500); // we need this for android :-/
+    }
   }, [focusIterator]);
+  useEffect(() => {
+    if (blurIterator && ref?.current) {
+      Platform.OS !== 'android' && ref.current.blur();
+      Platform.OS === 'android' && setTimeout(() => ref.current?.blur(), 50); // we need this for android :-/
+    }
+  }, [blurIterator]);
 
   const dynamicContainerStyle = [styles.container, {width}, style];
   const dynamicInputRowStyle = [
@@ -111,7 +123,6 @@ const CTextInput = ({
           value={value}
           secureTextEntry={showClearText}
           maxLength={maxLength}
-          autoFocus={!!focusIterator}
           caretHidden={caretHidden} // this is explicitly needed for android
           // inputType-props
           {...inputTypeProps}
