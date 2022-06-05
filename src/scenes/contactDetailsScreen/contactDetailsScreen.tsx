@@ -3,7 +3,6 @@ import {
   Alert,
   KeyboardAvoidingView,
   Linking,
-  Modal,
   Platform,
   StyleSheet,
   View,
@@ -27,6 +26,7 @@ import postConversation from '../../service/api/requests/postConversation';
 import Conversation, {ConversationType} from '../../model/types/conversation';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 import EditContactModal from './components/editContactModal';
+import AppearMoti from '../../components/appearMoti';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -123,23 +123,31 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
               />
               <View style={styles.actionButtonContainer}>
                 {phone?.length && (
-                  <FloatingActionButton
-                    onPress={() => navigateToExistingOrNewConversation('SMS')}
-                    icon={'chatbubble-outline'}
-                  />
+                  <AppearMoti delay={100}>
+                    <FloatingActionButton
+                      onPress={() => navigateToExistingOrNewConversation('SMS')}
+                      icon={'chatbubble-outline'}
+                    />
+                  </AppearMoti>
                 )}
                 {email?.length && (
+                  <AppearMoti delay={200}>
+                    <FloatingActionButton
+                      onPress={() =>
+                        navigateToExistingOrNewConversation('MAIL')
+                      }
+                      icon={'mail-outline'}
+                      style={styles.actionButton}
+                    />
+                  </AppearMoti>
+                )}
+                <AppearMoti delay={300}>
                   <FloatingActionButton
-                    onPress={() => navigateToExistingOrNewConversation('MAIL')}
-                    icon={'mail-outline'}
+                    onPress={() => setModalOpen(true)}
+                    icon={'pencil-outline'}
                     style={styles.actionButton}
                   />
-                )}
-                <FloatingActionButton
-                  onPress={() => setModalOpen(true)}
-                  icon={'pencil-outline'}
-                  style={styles.actionButton}
-                />
+                </AppearMoti>
               </View>
             </>
           </KeyboardAvoidingView>
@@ -175,12 +183,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const emojis = ['🥸', '🙃', '🤓', '😎'];
 function getTitle(contact: Contact) {
   const {first_name, last_name} = contact;
-  const emojiIndex =
-    Math.abs((first_name?.[0] ?? last_name?.[0] ?? 'a').charCodeAt(0) - 97) %
-    emojis.length;
-
-  return `${first_name ?? ''} ${last_name ?? ''} ${emojis[emojiIndex]}`;
+  return `${first_name ?? ''} ${last_name ?? ''} `;
 }

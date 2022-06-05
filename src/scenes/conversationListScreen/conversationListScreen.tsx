@@ -11,6 +11,7 @@ import Header from './components/header';
 import ROUTE from '../../nav/routes';
 import ToContactsButton from './components/toContactsButton';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
+import AppearMoti from '../../components/appearMoti';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -79,9 +80,11 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
           style={styles.flatList}
           contentContainerStyle={styles.flatListContent}
         />
-        <ToContactsButton
-          onPress={() => navigation.navigate(ROUTE.CONTACT_LIST)}
-        />
+        <AppearMoti delay={800}>
+          <ToContactsButton
+            onPress={() => navigation.navigate(ROUTE.CONTACT_LIST)}
+          />
+        </AppearMoti>
       </ResponsiveScreenWrapper>
       <Header filter={filter} setFilter={setFilter} />
     </>
