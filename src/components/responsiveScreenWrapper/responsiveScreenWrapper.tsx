@@ -18,7 +18,7 @@ const imgSrc = {
   light: require('../../../assets/pattern_light.png'),
 };
 
-const ResponsiveScreenWrapper = ({children, style}: Props) => {
+const ResponsiveScreenWrapper = ({children, style = {}}: Props) => {
   const {width} = useWindowDimensions();
   const themeId = useThemeId();
   const marginHorizontal = width > 800 ? width * 0.2 : 0;
@@ -26,10 +26,10 @@ const ResponsiveScreenWrapper = ({children, style}: Props) => {
     <>
       <ImageBackground
         source={imgSrc[themeId === 'light' ? 'light' : 'dark']}
-        style={styles.imgBg}
+        style={[styles.imgBg, {marginHorizontal}]}
         resizeMethod={'scale'}
       />
-      <View style={{...styles.container, ...style, marginHorizontal}}>
+      <View style={[styles.container, style, {marginHorizontal}]}>
         {children}
       </View>
     </>
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   imgBg: {
     ...StyleSheet.absoluteFillObject,
-    opacity: 0.2,
+    opacity: 0.1,
   },
 });

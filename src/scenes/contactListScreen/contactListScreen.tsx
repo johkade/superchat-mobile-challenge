@@ -18,7 +18,7 @@ type RenderItemParams = {
 };
 
 const ContactListScreen = ({navigation}: ScreenProps) => {
-  const {data: contacts} = useQuery('contacts', getContacts);
+  const {data: contacts} = useQuery('contactsList', getContacts);
 
   const renderContactDisplay = ({item}: RenderItemParams) => {
     return (
