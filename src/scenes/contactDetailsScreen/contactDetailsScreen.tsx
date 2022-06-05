@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -27,6 +27,8 @@ import Conversation, {ConversationType} from '../../model/types/conversation';
 import ResponsiveScreenWrapper from '../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 import EditContactModal from './components/editContactModal';
 import AppearMoti from '../../components/appearMoti';
+import {MotiView} from 'moti';
+import useRotateAnimation from '../../util/animation/useRotateAnimation';
 
 type ScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -38,6 +40,15 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
   const {id, first_name, last_name, email, phone} = route.params.contact;
   const queryClient = useQueryClient();
   const [modalOpen, setModalOpen] = useState(false);
+  const {state: rotationState, to: rotateTo} = useRotateAnimation([
+    '0deg',
+    '-45deg',
+  ]);
+
+  useEffect(() => {
+    modalOpen && rotateTo(1);
+    !modalOpen && rotateTo(0);
+  }, [modalOpen, rotateTo]);
 
   const {mutate: createConversation} = useMutation(postConversation, {
     onSuccess: response => {
@@ -127,6 +138,7 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
                     <FloatingActionButton
                       onPress={() => navigateToExistingOrNewConversation('SMS')}
                       icon={'chatbubble-outline'}
+                      style={styles.actionButton}
                     />
                   </AppearMoti>
                 )}
@@ -141,13 +153,16 @@ const ContactDetailsScreen = ({navigation, route}: ScreenProps) => {
                     />
                   </AppearMoti>
                 )}
-                <AppearMoti delay={300}>
-                  <FloatingActionButton
-                    onPress={() => setModalOpen(true)}
-                    icon={'pencil-outline'}
-                    style={styles.actionButton}
-                  />
-                </AppearMoti>
+                <MotiView
+                  state={rotationState}
+                  transition={{type: 'timing', duration: 400}}>
+                  <AppearMoti delay={300}>
+                    <FloatingActionButton
+                      onPress={() => setModalOpen(true)}
+                      icon={'pencil-outline'}
+                    />
+                  </AppearMoti>
+                </MotiView>
               </View>
             </>
           </KeyboardAvoidingView>
@@ -177,7 +192,7 @@ const styles = StyleSheet.create({
     marginBottom: 64,
     marginRight: SPACE.sidePadding,
   },
-  actionButton: {marginTop: SPACE.s8},
+  actionButton: {marginBottom: SPACE.s8},
   bottomMargined: {
     marginBottom: SPACE.m12,
   },
