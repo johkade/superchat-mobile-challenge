@@ -93,7 +93,7 @@ const CTextInput = ({
       color: theme.fontStd,
       ...fontConfig,
       minHeight: fontConfig.lineHeight + 3 * paddingVertical,
-      outline: Platform.OS === 'web' ? 'none' : undefined,
+      ...(Platform.OS === 'web' ? {outline: 'none'} : {}),
     },
   ];
   return (

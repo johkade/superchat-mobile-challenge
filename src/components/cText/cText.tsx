@@ -31,6 +31,7 @@ const CText = ({
     <Text
       style={[styles, style]}
       onPress={onPress}
+      allowFontScaling={false}
       numberOfLines={numberOfLines}>
       {text}
     </Text>
