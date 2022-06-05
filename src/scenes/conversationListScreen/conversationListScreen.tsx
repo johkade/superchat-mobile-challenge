@@ -54,10 +54,10 @@ const ConversationListScreen = ({navigation}: ScreenProps) => {
 
         if (contact && (contact.first_name || contact.last_name)) {
           // @ts-ignore
-          delete contact.id;
+          const contactWithoutId = {...contact, id: undefined};
           const convoWithName: ConversationWithContact = {
+            ...contactWithoutId,
             ...conv,
-            ...contact,
           };
           convosWithNames.push(convoWithName);
         }

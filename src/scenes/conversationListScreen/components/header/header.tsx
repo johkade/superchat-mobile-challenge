@@ -8,7 +8,6 @@ import COLORS from '../../../../style/theme/colors';
 import FilterButton from '../filterButton';
 import CText from '../../../../components/cText';
 import {FC} from '../../../../style/theme/fontConfig';
-import ResponsiveScreenWrapper from '../../../../components/responsiveScreenWrapper/responsiveScreenWrapper';
 
 type Props = {
   filter: Filter;
