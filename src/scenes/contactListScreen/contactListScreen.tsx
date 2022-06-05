@@ -30,6 +30,7 @@ const ContactListScreen = ({navigation}: ScreenProps) => {
             contact: item,
           })
         }
+        key={item.id}
       />
     );
   };
