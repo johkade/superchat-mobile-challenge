@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {GestureResponderEvent, Platform, StyleSheet} from 'react-native';
+import {
+  Dimensions,
+  GestureResponderEvent,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import CText from '../../../../components/cText';
 import useTheme from '../../../../style/theme/hooks/useTheme';
 import {FC} from '../../../../style/theme/fontConfig';
@@ -33,6 +39,7 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
   const [newEmail, setNewEmail] = useState(email);
   const [focusIterator, setFocusIterator] = useState(0);
   const [blurIterator, setBlurIterator] = useState(0);
+  const {height} = useWindowDimensions();
 
   useEffect(() => {
     if (visible) {
@@ -63,7 +70,7 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
       marginBottom: Platform.select({
         android: 0,
         ios: keyboardHeight,
-        web: 200,
+        web: height * 0.2,
       }),
     },
   ];
