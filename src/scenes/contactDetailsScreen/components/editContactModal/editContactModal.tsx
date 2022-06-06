@@ -70,7 +70,7 @@ const EditContactModal = ({visible, onPressOutside, contact}: Props) => {
       marginBottom: Platform.select({
         android: 0,
         ios: keyboardHeight,
-        web: height * 0.2,
+        web: height > 800 ? height * 0.2 : height * 0.1,
       }),
     },
   ];
