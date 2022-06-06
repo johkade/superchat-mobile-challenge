@@ -8,7 +8,7 @@ Available for: iOS and Android via Expo Go or for [Web on Amplify](https://main.
 ### How to run this:
 - clone the repo
 - run ``yarn install``
-- run ``expo start`` to start the expo dev server
+- run ``expo start`` to start the expo dev server. If this fails, you might have to upgrade your global expo package.
 
 #### web
 - press ``w`` to launch a local version in your browser or visit [This URL](https://main.dinmpyj37sok3.amplifyapp.com/) for a deployed web version on AWS Amplify.
@@ -27,5 +27,4 @@ Animations are done using [Moti](https://moti.fyi/).
 - log all devices into the same wifi network
 - check and set up your environment with
   - ``expo --version -> 5.4.8``
-  - ``node --version  -> v16.13.1``
-  - ``yarn --version -> 1.22.17``
+  - ``node --version  -> v16.x.x``

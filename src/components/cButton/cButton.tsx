@@ -1,16 +1,10 @@
 import React from 'react';
 import useTheme from '../../style/theme/hooks/useTheme';
-import {
-  GestureResponderEvent,
-  Platform,
-  StyleSheet,
-  ViewStyle,
-} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import {ACTIVE_OPACITY, BORDER_RADIUS, SPACE} from '../../style/theme/misc';
 import {PlatformPressable} from '@react-navigation/elements';
 import CText from '../cText';
 import {FC} from '../../style/theme/fontConfig';
-import * as Haptics from 'expo-haptics';
 import hapticFeedback from '../../util/haptic/hapticFeedback';
 
 type Props = {
