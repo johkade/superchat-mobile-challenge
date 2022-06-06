@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "comp": "npx ignite-cli g component"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
